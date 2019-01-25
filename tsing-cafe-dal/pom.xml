@@ -10,7 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tsing-cafe-dal</artifactId>
-    <groupId>tsing.edu.cn</groupId>
+    <groupId>cn.edu.tsinghua.cess</groupId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

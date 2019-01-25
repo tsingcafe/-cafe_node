@@ -29,7 +29,7 @@
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->
-        <javaModelGenerator targetPackage="tsing.hua.edu.cn.cafe.domain"
+        <javaModelGenerator targetPackage="cn.edu.tsing.hua.cafe.dal.domain"
                             targetProject="src/main/java">
             <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
             <property name="enableSubPackages" value="false"/>
@@ -38,14 +38,14 @@
         </javaModelGenerator>
 
         <!-- 生成mapxml文件 -->
-        <sqlMapGenerator targetPackage="tsing.hua.edu.cn.cafe.mapper"
+        <sqlMapGenerator targetPackage="cn.edu.tsing.hua.cafe.dal.mapper"
                          targetProject="src/main/java">
             <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!-- 生成mapxml对应client，也就是接口dao -->
-        <javaClientGenerator targetPackage="tsing.hua.edu.cn.cafe.dao"
+        <javaClientGenerator targetPackage="cn.edu.tsing.hua.cafe.dal.dao"
                              targetProject="src/main/java" type="XMLMAPPER">
             <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
             <property name="enableSubPackages" value="false"/>
@@ -56,7 +56,7 @@
                domainObjectName="ModelFile"
                enableCountByExample="false"
                enableDeleteByExample="false"
-               enableSelectByExample="false"
+               enableSelectByExample="true"
                enableUpdateByExample="false">
         </table>
 

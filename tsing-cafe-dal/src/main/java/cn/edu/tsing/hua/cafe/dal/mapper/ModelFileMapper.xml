@@ -26,6 +26,352 @@
     <result column="geographical_info" jdbcType="VARCHAR" property="geographicalInfo" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, node_id, full_path, institute, model, experiment, frequency, modeling_realm, 
+    ensemble_member, variable_name, mip_table, temporal_start_year, temporal_start_month, 
+    temporal_start_day, temporal_start_hour, temporal_start_minute, temporal_end_year, 
+    temporal_end_month, temporal_end_day, temporal_end_hour, temporal_end_minute, geographical_info, 
+    create_time
+  </sql>
+  <select id="selectByExample" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFileExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from model_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from model_file
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from model_file
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFile">
+    insert into model_file (id, node_id, full_path, 
+      institute, model, experiment, 
+      frequency, modeling_realm, ensemble_member, 
+      variable_name, mip_table, temporal_start_year, 
+      temporal_start_month, temporal_start_day, temporal_start_hour, 
+      temporal_start_minute, temporal_end_year, temporal_end_month, 
+      temporal_end_day, temporal_end_hour, temporal_end_minute, 
+      geographical_info, create_time)
+    values (#{id,jdbcType=INTEGER}, #{nodeId,jdbcType=INTEGER}, #{fullPath,jdbcType=VARCHAR}, 
+      #{institute,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{experiment,jdbcType=VARCHAR}, 
+      #{frequency,jdbcType=VARCHAR}, #{modelingRealm,jdbcType=VARCHAR}, #{ensembleMember,jdbcType=VARCHAR}, 
+      #{variableName,jdbcType=VARCHAR}, #{mipTable,jdbcType=VARCHAR}, #{temporalStartYear,jdbcType=VARCHAR}, 
+      #{temporalStartMonth,jdbcType=VARCHAR}, #{temporalStartDay,jdbcType=VARCHAR}, #{temporalStartHour,jdbcType=VARCHAR}, 
+      #{temporalStartMinute,jdbcType=VARCHAR}, #{temporalEndYear,jdbcType=VARCHAR}, #{temporalEndMonth,jdbcType=VARCHAR}, 
+      #{temporalEndDay,jdbcType=VARCHAR}, #{temporalEndHour,jdbcType=VARCHAR}, #{temporalEndMinute,jdbcType=VARCHAR}, 
+      #{geographicalInfo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFile">
+    insert into model_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nodeId != null">
+        node_id,
+      </if>
+      <if test="fullPath != null">
+        full_path,
+      </if>
+      <if test="institute != null">
+        institute,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="experiment != null">
+        experiment,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="modelingRealm != null">
+        modeling_realm,
+      </if>
+      <if test="ensembleMember != null">
+        ensemble_member,
+      </if>
+      <if test="variableName != null">
+        variable_name,
+      </if>
+      <if test="mipTable != null">
+        mip_table,
+      </if>
+      <if test="temporalStartYear != null">
+        temporal_start_year,
+      </if>
+      <if test="temporalStartMonth != null">
+        temporal_start_month,
+      </if>
+      <if test="temporalStartDay != null">
+        temporal_start_day,
+      </if>
+      <if test="temporalStartHour != null">
+        temporal_start_hour,
+      </if>
+      <if test="temporalStartMinute != null">
+        temporal_start_minute,
+      </if>
+      <if test="temporalEndYear != null">
+        temporal_end_year,
+      </if>
+      <if test="temporalEndMonth != null">
+        temporal_end_month,
+      </if>
+      <if test="temporalEndDay != null">
+        temporal_end_day,
+      </if>
+      <if test="temporalEndHour != null">
+        temporal_end_hour,
+      </if>
+      <if test="temporalEndMinute != null">
+        temporal_end_minute,
+      </if>
+      <if test="geographicalInfo != null">
+        geographical_info,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nodeId != null">
+        #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="fullPath != null">
+        #{fullPath,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="experiment != null">
+        #{experiment,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="modelingRealm != null">
+        #{modelingRealm,jdbcType=VARCHAR},
+      </if>
+      <if test="ensembleMember != null">
+        #{ensembleMember,jdbcType=VARCHAR},
+      </if>
+      <if test="variableName != null">
+        #{variableName,jdbcType=VARCHAR},
+      </if>
+      <if test="mipTable != null">
+        #{mipTable,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartYear != null">
+        #{temporalStartYear,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartMonth != null">
+        #{temporalStartMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartDay != null">
+        #{temporalStartDay,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartHour != null">
+        #{temporalStartHour,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartMinute != null">
+        #{temporalStartMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndYear != null">
+        #{temporalEndYear,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndMonth != null">
+        #{temporalEndMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndDay != null">
+        #{temporalEndDay,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndHour != null">
+        #{temporalEndHour,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndMinute != null">
+        #{temporalEndMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="geographicalInfo != null">
+        #{geographicalInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFile">
+    update model_file
+    <set>
+      <if test="nodeId != null">
+        node_id = #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="fullPath != null">
+        full_path = #{fullPath,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        institute = #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="experiment != null">
+        experiment = #{experiment,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null">
+        frequency = #{frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="modelingRealm != null">
+        modeling_realm = #{modelingRealm,jdbcType=VARCHAR},
+      </if>
+      <if test="ensembleMember != null">
+        ensemble_member = #{ensembleMember,jdbcType=VARCHAR},
+      </if>
+      <if test="variableName != null">
+        variable_name = #{variableName,jdbcType=VARCHAR},
+      </if>
+      <if test="mipTable != null">
+        mip_table = #{mipTable,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartYear != null">
+        temporal_start_year = #{temporalStartYear,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartMonth != null">
+        temporal_start_month = #{temporalStartMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartDay != null">
+        temporal_start_day = #{temporalStartDay,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartHour != null">
+        temporal_start_hour = #{temporalStartHour,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartMinute != null">
+        temporal_start_minute = #{temporalStartMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndYear != null">
+        temporal_end_year = #{temporalEndYear,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndMonth != null">
+        temporal_end_month = #{temporalEndMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndDay != null">
+        temporal_end_day = #{temporalEndDay,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndHour != null">
+        temporal_end_hour = #{temporalEndHour,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndMinute != null">
+        temporal_end_minute = #{temporalEndMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="geographicalInfo != null">
+        geographical_info = #{geographicalInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFile">
+    update model_file
+    set node_id = #{nodeId,jdbcType=INTEGER},
+      full_path = #{fullPath,jdbcType=VARCHAR},
+      institute = #{institute,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      experiment = #{experiment,jdbcType=VARCHAR},
+      frequency = #{frequency,jdbcType=VARCHAR},
+      modeling_realm = #{modelingRealm,jdbcType=VARCHAR},
+      ensemble_member = #{ensembleMember,jdbcType=VARCHAR},
+      variable_name = #{variableName,jdbcType=VARCHAR},
+      mip_table = #{mipTable,jdbcType=VARCHAR},
+      temporal_start_year = #{temporalStartYear,jdbcType=VARCHAR},
+      temporal_start_month = #{temporalStartMonth,jdbcType=VARCHAR},
+      temporal_start_day = #{temporalStartDay,jdbcType=VARCHAR},
+      temporal_start_hour = #{temporalStartHour,jdbcType=VARCHAR},
+      temporal_start_minute = #{temporalStartMinute,jdbcType=VARCHAR},
+      temporal_end_year = #{temporalEndYear,jdbcType=VARCHAR},
+      temporal_end_month = #{temporalEndMonth,jdbcType=VARCHAR},
+      temporal_end_day = #{temporalEndDay,jdbcType=VARCHAR},
+      temporal_end_hour = #{temporalEndHour,jdbcType=VARCHAR},
+      temporal_end_minute = #{temporalEndMinute,jdbcType=VARCHAR},
+      geographical_info = #{geographicalInfo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="cn.edu.tsing.hua.cafe.dal.domain.ModelFile">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="node_id" jdbcType="INTEGER" property="nodeId" />
+    <result column="full_path" jdbcType="VARCHAR" property="fullPath" />
+    <result column="institute" jdbcType="VARCHAR" property="institute" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="experiment" jdbcType="VARCHAR" property="experiment" />
+    <result column="frequency" jdbcType="VARCHAR" property="frequency" />
+    <result column="modeling_realm" jdbcType="VARCHAR" property="modelingRealm" />
+    <result column="ensemble_member" jdbcType="VARCHAR" property="ensembleMember" />
+    <result column="variable_name" jdbcType="VARCHAR" property="variableName" />
+    <result column="mip_table" jdbcType="VARCHAR" property="mipTable" />
+    <result column="temporal_start_year" jdbcType="VARCHAR" property="temporalStartYear" />
+    <result column="temporal_start_month" jdbcType="VARCHAR" property="temporalStartMonth" />
+    <result column="temporal_start_day" jdbcType="VARCHAR" property="temporalStartDay" />
+    <result column="temporal_start_hour" jdbcType="VARCHAR" property="temporalStartHour" />
+    <result column="temporal_start_minute" jdbcType="VARCHAR" property="temporalStartMinute" />
+    <result column="temporal_end_year" jdbcType="VARCHAR" property="temporalEndYear" />
+    <result column="temporal_end_month" jdbcType="VARCHAR" property="temporalEndMonth" />
+    <result column="temporal_end_day" jdbcType="VARCHAR" property="temporalEndDay" />
+    <result column="temporal_end_hour" jdbcType="VARCHAR" property="temporalEndHour" />
+    <result column="temporal_end_minute" jdbcType="VARCHAR" property="temporalEndMinute" />
+    <result column="geographical_info" jdbcType="VARCHAR" property="geographicalInfo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
   <sql id="Base_Column_List">
     id, node_id, full_path, institute, model, experiment, frequency, modeling_realm, 
     ensemble_member, variable_name, mip_table, temporal_start_year, temporal_start_month, 

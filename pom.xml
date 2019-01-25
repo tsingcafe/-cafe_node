@@ -13,7 +13,6 @@
 		<module>ncl-script</module>
         <module>tsing-cafe-dal</module>
 		<module>tsing-cafe-service</module>
-		<module>tsing-cafe-dal</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
