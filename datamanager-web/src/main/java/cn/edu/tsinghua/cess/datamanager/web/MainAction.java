@@ -1,6 +1,7 @@
 package cn.edu.tsinghua.cess.datamanager.web;
 
 import cn.edu.tsing.hua.cafe.service.ModelFileJust;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,20 +12,23 @@ import javax.annotation.Resource;
 @Controller
 public class MainAction {
 
-	@Resource
-	private ModelFileJust modelFileJust;
+    @Resource
+    private ModelFileJust modelFileJust;
 
-	@RequestMapping("index")
-	public String main() {
-		return "main/index";
-	}
+    @RequestMapping("index")
+    public String main() {
+        return "main/index";
+    }
 
-	@RequestMapping(value = "get/each/mfs")
-	@ResponseBody
-	public String deploy(@RequestParam("model") String mode, @RequestParam("value") String value) {
-		System.out.println("-----------");
-		modelFileJust.getModelFile(mode, value);
+    @RequestMapping(value = "get/mfs/part")
+    @ResponseBody
+    public String each(@RequestParam("model") String mode, @RequestParam("value") String value) {
+        return JSONObject.toJSONString(modelFileJust.getModelFile(mode, value));
+    }
 
-		return "redirect:";  // after deployment, redirect the browser to "/web/deployment" as to show the result
-	}
+    @RequestMapping(value = "get/mfs/intact")
+    @ResponseBody
+    public String intact() {
+        return JSONObject.toJSONString(modelFileJust.getModeFileAlll());
+    }
 }

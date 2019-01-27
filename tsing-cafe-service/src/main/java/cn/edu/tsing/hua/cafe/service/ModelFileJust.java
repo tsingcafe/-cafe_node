@@ -1,6 +1,5 @@
 package cn.edu.tsing.hua.cafe.service;
 
-import cn.edu.tsing.hua.cafe.dal.domain.ModelFile;
 import cn.edu.tsing.hua.cafe.domain.Response;
 
 /**
@@ -9,4 +8,5 @@ import cn.edu.tsing.hua.cafe.domain.Response;
  */
 public interface ModelFileJust {
     Response getModelFile(String model, String value);
+    Response getModeFileAlll();
 }

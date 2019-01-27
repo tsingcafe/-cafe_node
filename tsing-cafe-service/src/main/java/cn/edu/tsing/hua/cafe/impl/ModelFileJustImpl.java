@@ -6,7 +6,6 @@ import cn.edu.tsing.hua.cafe.domain.Response;
 import cn.edu.tsing.hua.cafe.dto.ModelFileJustDTO;
 import cn.edu.tsing.hua.cafe.service.ModelFileJust;
 import cn.edu.tsing.hua.cafe.util.ModelFileUtil;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,16 +38,24 @@ public class ModelFileJustImpl implements ModelFileJust {
     @Resource
     private ModelFileUtil modelFileUtil;
 
+    private Map<String, Response> cachMap = new HashMap<>();
+
     @Override
     public Response getModelFile(String model, String value) {
-        Response response = new Response();
-        response.setSuccess(false);
+
+        Response response = new Response(false);
+        if (StringUtils.isBlank(model) || StringUtils.isBlank(value)) {
+            log.info("buildModelFile is null");
+            response.setError("model or value null");
+            return response;
+        }
+        if (isCache(model, value)) {
+            return cachMap.get(model.concat(value));
+        }
         try {
             ModelFile modelfile = buildModelFile(model, value);
             if (modelfile == null) {
-                log.info("buildModelFile is null");
-                response.setError("model or value null");
-                return response;
+
             }
             List<ModelFile> listModelFile = modelFileMapper.listModelFile(modelfile);
             if (CollectionUtils.isEmpty(listModelFile)) {
@@ -57,11 +65,45 @@ public class ModelFileJustImpl implements ModelFileJust {
             ModelFileJustDTO modelFileJustDTO = distinctModelFiles(listModelFile);
             response.setSuccess(true);
             response.setData(modelFileJustDTO);
+            cachMap.put(model.concat(value), response);
             return response;
         } catch (Exception e) {
-           response.setError("service is exception");
-           return response;
+            response.setError("service is exception");
+            return response;
         }
+    }
+
+    @Override
+    public Response getModeFileAlll() {
+        Response response = new Response(false);
+        try {
+            List<ModelFile> listModelFile = modelFileMapper.listModelFile(new ModelFile());
+            if (CollectionUtils.isEmpty(listModelFile)) {
+                response.setError("query modelFile is empty");
+                return response;
+            }
+            ModelFileJustDTO modelFileJustDTO = distinctModelFiles(listModelFile);
+            response.setSuccess(true);
+            response.setData(modelFileJustDTO);
+            return response;
+        } catch (Exception e) {
+            response.setError("service is exception");
+            return response;
+        }
+    }
+
+    /**
+     * 缓存key
+     *
+     * @param model
+     * @param value
+     * @return
+     */
+    private Boolean isCache(String model, String value) {
+        if (cachMap.containsKey(model.concat(value))) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -91,10 +133,6 @@ public class ModelFileJustImpl implements ModelFileJust {
      */
     public ModelFile buildModelFile(String model, String value) {
 
-        if (StringUtils.isBlank(model) || StringUtils.isBlank(value)) {
-            log.info("bulidModelFile model or value is blank");
-            return null;
-        }
         ModelFile modelFile = new ModelFile();
         if (modelFileUtil.getModelFileUtilMap().containsKey(model)) {
             BeanWrapper modelFileBean = new BeanWrapperImpl(modelFile);
