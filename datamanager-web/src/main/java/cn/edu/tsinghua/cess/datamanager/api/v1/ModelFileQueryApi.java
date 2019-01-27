@@ -31,8 +31,6 @@ public class ModelFileQueryApi {
 	@Autowired DeploymentService deploymentService;
 	@Autowired RemoteServiceFactory remoteServiceFactory;
 
-	@Resource
-	private ModelFileJust modelFileJust;
 
 	/**
 	 * serve both client request and server remote request
@@ -111,12 +109,5 @@ public class ModelFileQueryApi {
 		return filter;
 	}
 
-	@RequestMapping(value = "/get/each/mfs")
-	@ResponseBody
-	public String deploy(@RequestParam("model") String mode, @RequestParam("value") String value) {
 
-		modelFileJust.getModelFile(mode, value);
-
-		return "redirect:";  // after deployment, redirect the browser to "/web/deployment" as to show the result
-	}
 }
