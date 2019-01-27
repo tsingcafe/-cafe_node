@@ -1,11 +1,10 @@
 package cn.edu.tsing.hua.cafe.impl;
 
-
 import cn.edu.tsing.hua.cafe.dal.dao.ModelFileMapper;
 import cn.edu.tsing.hua.cafe.dal.domain.ModelFile;
 import cn.edu.tsing.hua.cafe.domain.Response;
 import cn.edu.tsing.hua.cafe.dto.ModelFileJustDTO;
-import cn.edu.tsing.hua.cafe.service.DeploymentJust;
+import cn.edu.tsing.hua.cafe.service.ModelFileJust;
 import cn.edu.tsing.hua.cafe.util.ModelFileUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -23,12 +21,11 @@ import java.util.List;
 
 /**
  * @author: snn
- * @created: 2019-01-26 00:33
+ * @created: 2019-01-27 18:50
  */
-@Service
-public class DeploymentJustImpl implements DeploymentJust {
+public class ModelFileJustImpl implements ModelFileJust {
 
-    private final static Logger log = LoggerFactory.getLogger(DeploymentJust.class);
+    private final static Logger log = LoggerFactory.getLogger(ModelFileJust.class);
 
     @Resource
     private ModelFileMapper modelFileMapper;
@@ -36,6 +33,7 @@ public class DeploymentJustImpl implements DeploymentJust {
     @Resource
     private ModelFileUtil modelFileUtil;
 
+    @Override
     public ModelFile getModelFile(String model, String value) {
 
         ModelFile modelfile = buildModelFile(model, value);
@@ -89,8 +87,4 @@ public class DeploymentJustImpl implements DeploymentJust {
         System.out.println(JSONObject.toJSONString(response, SerializerFeature.WriteMapNullValue));
     }
 
-    @Override
-    public void test() {
-        getModelFile("model", "FGOALS-g2");
-    }
 }
