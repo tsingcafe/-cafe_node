@@ -82,7 +82,7 @@ public class ModelFileQueryApi {
 	}
 
 
-	
+	get/each/modelFile
 	private ModelFileFilter createFilter(
 			List<String> institute,
 			List<String> model,

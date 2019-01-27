@@ -1,5 +1,8 @@
 package cn.edu.tsing.hua.cafe.util;
 
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,14 +10,16 @@ import java.util.Map;
  * @author: snn
  * @created: 2019-01-26 00:24
  */
+@Service
 public class ModelFileUtil {
 
     /**
      * modelFile容器
      */
-    private static Map<String, String> mapModelFileMap = new HashMap<String, String>(8);
+    private Map<String, String> mapModelFileMap = new HashMap<String, String>(8);
 
-    public ModelFileUtil() {
+    @PostConstruct
+    public void setMapModelFileMap() {
         mapModelFileMap.put("institute", "institute");
         mapModelFileMap.put("model", "model");
         mapModelFileMap.put("experiment", "experiment");
@@ -25,7 +30,7 @@ public class ModelFileUtil {
         mapModelFileMap.put("mipTable", "mipTable");
     }
 
-    public static Map<String, String> getModelFileUtilMap(){
-        return mapModelFileMap;
+    public Map<String, String> getModelFileUtilMap(){
+        return this.mapModelFileMap;
     }
 }

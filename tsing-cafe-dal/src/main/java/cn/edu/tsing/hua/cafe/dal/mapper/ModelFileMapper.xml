@@ -206,6 +206,79 @@
       </if>
     </trim>
   </insert>
+
+  <select id="listModelFile" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFile"  resultMap="BaseResultMap">
+    select * from model_file
+    <where >
+      <if test="nodeId != null" >
+        node_id = #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="fullPath != null" >
+        full_path = #{fullPath,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null" >
+        institute = #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="experiment != null" >
+        experiment = #{experiment,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null" >
+        frequency = #{frequency,jdbcType=VARCHAR},
+      </if>
+      <if test="modelingRealm != null" >
+        modeling_realm = #{modelingRealm,jdbcType=VARCHAR},
+      </if>
+      <if test="ensembleMember != null" >
+        ensemble_member = #{ensembleMember,jdbcType=VARCHAR},
+      </if>
+      <if test="variableName != null" >
+        variable_name = #{variableName,jdbcType=VARCHAR},
+      </if>
+      <if test="mipTable != null" >
+        mip_table = #{mipTable,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartYear != null" >
+        temporal_start_year = #{temporalStartYear,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartMonth != null" >
+        temporal_start_month = #{temporalStartMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartDay != null" >
+        temporal_start_day = #{temporalStartDay,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartHour != null" >
+        temporal_start_hour = #{temporalStartHour,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalStartMinute != null" >
+        temporal_start_minute = #{temporalStartMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndYear != null" >
+        temporal_end_year = #{temporalEndYear,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndMonth != null" >
+        temporal_end_month = #{temporalEndMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndDay != null" >
+        temporal_end_day = #{temporalEndDay,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndHour != null" >
+        temporal_end_hour = #{temporalEndHour,jdbcType=VARCHAR},
+      </if>
+      <if test="temporalEndMinute != null" >
+        temporal_end_minute = #{temporalEndMinute,jdbcType=VARCHAR},
+      </if>
+      <if test="geographicalInfo != null" >
+        geographical_info = #{geographicalInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </where>
+  </select>
+
   <update id="updateByPrimaryKeySelective" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFile" >
     update model_file
     <set >

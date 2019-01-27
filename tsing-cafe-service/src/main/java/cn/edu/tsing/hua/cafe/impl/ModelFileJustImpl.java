@@ -7,7 +7,6 @@ import cn.edu.tsing.hua.cafe.domain.Response;
 import cn.edu.tsing.hua.cafe.dto.ModelFileJustDTO;
 import cn.edu.tsing.hua.cafe.service.DeploymentJust;
 import cn.edu.tsing.hua.cafe.util.ModelFileUtil;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.StringUtils;
@@ -16,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: snn
@@ -32,12 +33,22 @@ public class DeploymentJustImpl implements DeploymentJust {
     @Resource
     private ModelFileMapper modelFileMapper;
 
+    @Resource
+    private ModelFileUtil modelFileUtil;
+
     public ModelFile getModelFile(String model, String value) {
 
-
-        return null
-
-                ;
+        ModelFile modelfile = buildModelFile(model, value);
+        if (modelfile == null) {
+            log.info("buildModelFile is null");
+            return null;
+        }
+        List<ModelFile> listModelFile = modelFileMapper.listModelFile(modelfile);
+        if (CollectionUtils.isEmpty(listModelFile)) {
+            return null;
+        }
+        System.out.println(JSONObject.toJSONString(listModelFile));
+        return null;
     }
 
     /**
@@ -48,16 +59,17 @@ public class DeploymentJustImpl implements DeploymentJust {
      */
     public ModelFile buildModelFile(String model, String value) {
 
-        ModelFile modelFile = new ModelFile();
         if (StringUtils.isBlank(model) || StringUtils.isBlank(value)) {
             log.info("bulidModelFile model or value is blank");
+            return null;
+        }
+        ModelFile modelFile = new ModelFile();
+        if (modelFileUtil.getModelFileUtilMap().containsKey(model)) {
+            BeanWrapper modelFileBean = new BeanWrapperImpl(modelFile);
+            modelFileBean.setPropertyValue(modelFileUtil.getModelFileUtilMap().get(model), value);
             return modelFile;
         }
-        if (ModelFileUtil.getModelFileUtilMap().containsKey(model)) {
-            BeanWrapper modelFileBean = new BeanWrapperImpl(modelFile);
-            modelFileBean.setPropertyValue(ModelFileUtil.getModelFileUtilMap().get(model), value);
-        }
-        return modelFile;
+        return null;
     }
 
     public static void tests() {
@@ -79,6 +91,6 @@ public class DeploymentJustImpl implements DeploymentJust {
 
     @Override
     public void test() {
-
+        getModelFile("model", "FGOALS-g2");
     }
 }

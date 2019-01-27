@@ -81,7 +81,7 @@ public class DeploymentAction {
 	public String showDeployments() {
 		System.out.println("--------------");
 		deploymentJust.test();
-		return null;
+		return "redirect:";
 	}
 
 
