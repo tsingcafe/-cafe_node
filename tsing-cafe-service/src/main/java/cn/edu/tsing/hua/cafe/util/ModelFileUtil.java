@@ -12,17 +12,20 @@ public class ModelFileUtil {
     /**
      * modelFile容器
      */
-    private static Map<String, String> mapModelFileUtil = new HashMap<String, String>(8);
+    private static Map<String, String> mapModelFileMap = new HashMap<String, String>(8);
 
     public ModelFileUtil() {
-        mapModelFileUtil.put("institute", "institute");
-        mapModelFileUtil.put("model", "model");
-        mapModelFileUtil.put("experiment", "experiment");
-        mapModelFileUtil.put("frequency", "frequency");
-        mapModelFileUtil.put("modelingRealm", "modelingRealm");
-        mapModelFileUtil.put("ensembleMember", "ensembleMember");
-        mapModelFileUtil.put("variableName", "variableName");
-        mapModelFileUtil.put("mipTable", "mipTable");
+        mapModelFileMap.put("institute", "institute");
+        mapModelFileMap.put("model", "model");
+        mapModelFileMap.put("experiment", "experiment");
+        mapModelFileMap.put("frequency", "frequency");
+        mapModelFileMap.put("modelingRealm", "modelingRealm");
+        mapModelFileMap.put("ensembleMember", "ensembleMember");
+        mapModelFileMap.put("variableName", "variableName");
+        mapModelFileMap.put("mipTable", "mipTable");
     }
 
+    public static Map<String, String> getModelFileUtilMap(){
+        return mapModelFileMap;
+    }
 }

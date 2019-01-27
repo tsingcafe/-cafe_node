@@ -9,9 +9,6 @@ import java.util.List;
  */
 public class ModelFileJustDTO {
 
-    /**
-     *
-     */
     private List<String> institute;
 
     private List<String> model;
@@ -141,4 +138,5 @@ public class ModelFileJustDTO {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
 }

@@ -56,7 +56,7 @@
                domainObjectName="ModelFile"
                enableCountByExample="false"
                enableDeleteByExample="false"
-               enableSelectByExample="true"
+               enableSelectByExample="false"
                enableUpdateByExample="false">
         </table>
 
