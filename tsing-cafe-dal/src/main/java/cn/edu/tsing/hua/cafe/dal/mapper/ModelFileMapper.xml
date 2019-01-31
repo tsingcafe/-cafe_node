@@ -252,6 +252,18 @@
         </where>
     </select>
 
+    <select id="listModelFileMulti" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        *
+        from model_file
+        where ${model} in
+        <foreach item="item" index="index" collection="item"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
     <update id="updateByPrimaryKeySelective" parameterType="cn.edu.tsing.hua.cafe.dal.domain.ModelFile">
         update model_file
         <set>

@@ -7,6 +7,7 @@ import cn.edu.tsing.hua.cafe.dto.ModelFileJustDTO;
 import cn.edu.tsing.hua.cafe.service.ModelFileJust;
 import cn.edu.tsing.hua.cafe.util.ModelFileUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.omg.CORBA.MARSHAL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
@@ -71,6 +72,54 @@ public class ModelFileJustImpl implements ModelFileJust {
             response.setError("service is exception");
             return response;
         }
+    }
+
+    @Override
+    public Response getModelFileByMulti(String model, String value) {
+
+        Response response = new Response(false);
+        if (StringUtils.isBlank(model) || StringUtils.isBlank(value)) {
+            log.info("buildModelFile is null");
+            response.setError("model or value null");
+            return response;
+        }
+        if (!value.contains(";")) {
+            return getModelFile(model, value);
+        }
+        String[] arr = value.split(";");
+        if (arr.length == 0) {
+            response.setError("arr length size 0, param value is error");
+            return response;
+        }
+        try {
+            Map<String, Object> map = new HashMap();
+            if (getModelString(model, map)) {
+                response.setError("model is non exist");
+                return response;
+            }
+            map.put("item", arr);
+            List<ModelFile> listModelFile = modelFileMapper.listModelFileMulti(map);
+            if (CollectionUtils.isEmpty(listModelFile)) {
+                response.setError("query modelFile is empty");
+                return response;
+            }
+            ModelFileJustDTO modelFileJustDTO = distinctModelFiles(listModelFile);
+            response.setSuccess(true);
+            response.setData(modelFileJustDTO);
+            cachMap.put(model.concat(value), response);
+            return response;
+        } catch (Exception e) {
+            response.setError("service is exception");
+            return response;
+        }
+    }
+
+    private boolean getModelString(String model, Map map) {
+        if (modelFileUtil.getModelFileUtilMap().containsKey(model)) {
+            map.put("model", modelFileUtil.getModelFileUtilMap().get(model));
+            return false;
+        }
+        return true;
     }
 
     @Override

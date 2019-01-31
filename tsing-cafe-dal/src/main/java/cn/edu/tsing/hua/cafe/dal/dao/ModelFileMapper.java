@@ -3,6 +3,7 @@ package cn.edu.tsing.hua.cafe.dal.dao;
 import cn.edu.tsing.hua.cafe.dal.domain.ModelFile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ModelFileMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,6 +15,8 @@ public interface ModelFileMapper {
     ModelFile selectByPrimaryKey(Integer id);
 
     List<ModelFile> listModelFile(ModelFile modelFile);
+
+    List<ModelFile> listModelFileMulti(Map map);
 
     int updateByPrimaryKeySelective(ModelFile record);
 

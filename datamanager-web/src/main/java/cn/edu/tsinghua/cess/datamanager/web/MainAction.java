@@ -26,6 +26,12 @@ public class MainAction {
         return JSONObject.toJSONString(modelFileJust.getModelFile(mode, value));
     }
 
+    @RequestMapping(value = "get/mfs/part/multi")
+    @ResponseBody
+    public String multi(@RequestParam("model") String mode, @RequestParam("value") String value) {
+        return JSONObject.toJSONString(modelFileJust.getModelFileByMulti(mode, value));
+    }
+
     @RequestMapping(value = "get/mfs/intact")
     @ResponseBody
     public String intact() {

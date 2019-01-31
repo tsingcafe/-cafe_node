@@ -8,5 +8,6 @@ import cn.edu.tsing.hua.cafe.domain.Response;
  */
 public interface ModelFileJust {
     Response getModelFile(String model, String value);
+    Response getModelFileByMulti(String model, String value);
     Response getModeFileAlll();
 }
